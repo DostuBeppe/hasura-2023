@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS commit_badge(json, integer);

@@ -14,6 +14,9 @@ ALTER SEQUENCE public.candidates_id_seq RESTART WITH 1;
 ALTER SEQUENCE public.badge_reqs_id_seq RESTART WITH 1;
 ALTER SEQUENCE public.badge_defs_id_seq RESTART WITH 1;
 
+
+
+
 -- Insert data into badge_defs table
 INSERT INTO public.badge_defs (id, description) VALUES
 (1, 'Software Engineering'),
@@ -42,10 +45,10 @@ INSERT INTO public.candidates (id, name) VALUES
 (3, 'Robert Johnson');
 
 -- Insert data into badges table
-INSERT INTO public.badges (id, badge_defs_id, version, data) VALUES
-(1, 1, NOW(), '{"message": "Data for Software Engineering Badge"}'::jsonb),
-(2, 2, NOW(), '{"message": "Data for Data Science Badge"}'::jsonb),
-(3, 3, NOW(), '{"message": "Data for Cybersecurity Badge"}'::jsonb);
+SELECT * from commit_badge('{}', 1);
+SELECT * from commit_badge('{}', 2);
+SELECT * from commit_badge('{}', 3);
+
 
 -- Insert data into proposals table
 INSERT INTO public.proposals (id, created_at, notes, badge_id, candidate_id) VALUES
@@ -61,3 +64,8 @@ INSERT INTO public.evidences (id, requirement_id, proposal_id) VALUES
 (3, 1, 2),
 (4, 2, 3),
 (5, 1, 4);
+
+
+
+
+SELECT setval('public.badges_id_seq', (SELECT COALESCE(MAX(id), 1) FROM public.badges));
